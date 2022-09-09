@@ -1,0 +1,72 @@
+<app-nav-bar></app-nav-bar>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Birthday</th>
+            <th scope="col">Email</th>
+            <th scope="col">Role</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor=" let user of userService.users">
+            <td>{{user._id}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.lastname}}</td>
+            <td>{{user.birthday}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.role}}</td>
+            <td>
+                <button (click)="onEdit(user)" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-info" style="color:aliceblue ;">Edit</button>
+                <button (click)="onDelete(user._id)"  class="btn btn-danger mx-3">Delete</button>
+               <!-- <button routerLink="/details/{{ article._id }}" type="button"  class="btn btn-info" style="color:aliceblue ;">Details</button>-->
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Article Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form #articleForm="ngForm">
+                <input type="hidden" class="form-control" name="_id"  [(ngModel)]="userService.selectedUser._id">
+                <div class="mb-3">
+                  <label for="name" class="form-label">Name</label>
+                  <input type="text" class="form-control" name="name"  [(ngModel)]="userService.selectedUser.name" placeholder="Enter full name" required>
+                </div>
+                <div class="mb-3">
+                  <label for="lastname" class="form-label">Last name</label>
+                  <input type="text" class="form-control" name="lastname"  [(ngModel)]="userService.selectedUser.lastname" placeholder="last name">
+                </div>
+                <div class="mb-3">
+                    <label for="birthday" class="form-label">Birthday</label>
+                    <input type="date" class="form-control" name="birthday"  [(ngModel)]="userService.selectedUser.birthday" placeholder="birthday">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email"  [(ngModel)]="userService.selectedUser.email" placeholder="email">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="role" class="form-label">Role</label>
+                    <input type="email" class="form-control" name="role"  [(ngModel)]="userService.selectedUser.role" placeholder="role">
+                </div>
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button"  *ngIf="showAdd" (click)="postUserDetails(articleForm)" class="btn btn-primary">Add</button>
+          <button type="button"  *ngIf="showUpdate" (click)="updateUserDetails(articleForm)" class="btn btn-primary">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+

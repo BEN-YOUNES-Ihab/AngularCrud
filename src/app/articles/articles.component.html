@@ -1,0 +1,82 @@
+<app-nav-bar></app-nav-bar>
+<section>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Price</th>
+            <th scope="col">Size</th>
+            <th scope="col">Comment</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor=" let article of articleService.articles">
+            <td>{{article._id}}</td>
+            <td>{{article.name}}</td>
+            <td>{{article.category}}</td>
+            <td>{{article.price}}</td>
+            <td>{{article.size}}</td>
+            <td>{{article.comment}}</td>
+            <td>
+                <button (click)="onEdit(article)" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-info" style="color:aliceblue ;">Edit</button>
+                <button (click)="onDelete(article._id)"  class="btn btn-danger mx-3">Delete</button>
+               <!-- <button routerLink="/details/{{ article._id }}" type="button"  class="btn btn-info" style="color:aliceblue ;">Details</button>-->
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Article Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form #articleForm="ngForm">
+                <input type="hidden" class="form-control" name="_id"  [(ngModel)]="articleService.selectedArticle._id">
+                <div class="mb-3">
+                  <label for="name" class="form-label">Name</label>
+                  <input type="text" class="form-control" name="name"  [(ngModel)]="articleService.selectedArticle.name" placeholder="Enter full name" required>
+                </div>
+                <div class="mb-3">
+                  <label for="category" class="form-label">Category</label>
+                  <input type="text" class="form-control" name="category"  [(ngModel)]="articleService.selectedArticle.category" placeholder="Cat">
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="text" class="form-control" name="price"  [(ngModel)]="articleService.selectedArticle.price" placeholder="Enter price">
+                </div>
+                <div class="mb-3">
+                    <label for="size" class="form-label">Size</label>
+                    <input type="text" class="form-control" name="size"  [(ngModel)]="articleService.selectedArticle.size" placeholder="Size">
+                </div>
+                <div class="mb-3">
+                    <label for="comment" class="form-label">Comment</label>
+                    <input type="text" class="form-control" name="comment"  [(ngModel)]="articleService.selectedArticle.comment" placeholder="Comment">
+                </div>
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button"  *ngIf="showAdd" (click)="postAricleDetails(articleForm)" class="btn btn-primary">Add</button>
+          <button type="button"  *ngIf="showUpdate" (click)="updateArticleDetails(articleForm)" class="btn btn-primary">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col text-center">
+        <button style="flex: start;" (click)="clickAddArticle()" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-success">
+          Add Article
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

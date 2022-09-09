@@ -1,0 +1,16 @@
+<nav class="navbar navbar-light bg-primary">
+    <div class="container-fluid">
+        <h1 style="color: aliceblue ;">{{userService.GetRole()}}</h1>
+        <div class="d-flex">
+            <button *ngIf="this.userService.isAdmin() && !this.userService.isUserRoute()" style="margin-left:10px ;background-color: yellowgreen;border: none;" routerLink="/users" type="button"  class="btn btn-success">
+                Users
+            </button>
+            <button *ngIf="this.userService.isUserRoute()" style="margin-left:10px ;background-color: yellowgreen;border: none;" routerLink="/articles" type="button"  class="btn btn-success">
+                Articles
+            </button>
+            <button (click)="userService.Logout()" type="button"   class="btn btn-danger mx-3">
+                Logout
+            </button>
+        </div>
+    </div>
+</nav>
